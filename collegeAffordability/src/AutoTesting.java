@@ -1,9 +1,9 @@
 /**
  * Created by norelltagle on 4/4/16.
-
-//package myPackage;
-
-/**
+ * <p>
+ * //package myPackage;
+ * <p>
+ * /**
  * Autotesting.java
  * This class contains all the methods that detect and manipulate all the slider bars, table entries and drop down menus
  */
@@ -58,16 +58,18 @@ import org.w3c.dom.css.Rect;
 public class AutoTesting {
 
     //Paths that would need to be changed eventually
-    public static final String desktop = "/Users/norelltagle/Desktop/"; //path for the desktop
+    public static final String desktop = System.getProperty("user.home") + "/Desktop/"; //path for the desktop
     public static final String siteURL = "http://localhost:8000/proto1/#"; //website URL
     public static final String logFilePrefix = "localhost-8000"; //prefix for file name
-    public static final String netExportPath = "/Users/norelltagle/Documents/netExport-0.8.xpi";
-    public static final String fireBugPath = "/Users/norelltagle/Documents/firebug-2.0.16.xpi";
+    public static final String netExportPath = new File ("").getAbsolutePath() + "/netExport-0.8.xpi";
+    public static final String fireBugPath =  new File ("").getAbsolutePath() + "/firebug-2.0.16.xpi";
 
     public static final int WAIT_TIME = 60; //wait time for WebDriver
     public String requestLogs = ""; //String where HAR file will be stored
 
     public static void main(String[] args) throws IOException, Exception {
+        System.out.println("NETEXPORT PATH " + netExportPath);
+        System.out.println("FIREBUG PATH " + fireBugPath);
         AutoTesting test = new AutoTesting();
 
         /*
@@ -157,12 +159,12 @@ public class AutoTesting {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, WAIT_TIME); //Have a maximum wait of 60 seconds
 
-       // test.loadGooglePage(js, driver);
+        test.loadGooglePage(js, driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("weblogin_netid")));
         //test.wait(800);
-        //test.loadUWPage(js, driver, wait);
+        test.loadUWPage(js, driver, wait);
         //test.wait(3000);
-       // test.validateOffline(driver, wait);
+        test.validateOffline(driver, wait);
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
 
@@ -182,6 +184,25 @@ public class AutoTesting {
 
     }
 
+
+    public void loadGooglePage(JavascriptExecutor js, WebDriver driver) {
+        js.executeScript("document.getElementById('Email').value = 'ntagle@uw.edu'");
+        driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div[1]/form/div[1]/div/input")).click();
+    }
+
+    public void loadUWPage(JavascriptExecutor js, WebDriver driver, WebDriverWait wait) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("weblogin_netid")));
+        js.executeScript("document.getElementById('weblogin_netid').value = 'ntagle'");
+        js.executeScript("document.getElementById('weblogin_password').value = 'Nmot1994'");
+        driver.findElement(By.xpath("/html/body/div/div/div[1]/form/ul[2]/li/input")).click();
+    }
+
+    //Automatically approves access to the website
+    public void validateOffline(WebDriver driver, WebDriverWait wait) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_approve_access")));
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div/form/button[1]")).click();
+
+    }
 
 
     //testAllTables
@@ -303,7 +324,7 @@ public class AutoTesting {
                         String allParams = "{" + entry.getRequest().getPostData().getParams().toString() + "}";
 
                         //Fix the string because the library doesn't actually format it into proper JSON
-                        allParams = allParams.replaceAll(",  }", "}").replaceAll("\"\\[","[").replaceAll("\\]\"","]").replaceAll("\"\\{","{").replaceAll("}\"", "}");
+                        allParams = allParams.replaceAll(",  }", "}").replaceAll("\"\\[", "[").replaceAll("\\]\"", "]").replaceAll("\"\\{", "{").replaceAll("}\"", "}");
 
                         //Format the file into proper JSON
                         JsonParser parser = new JsonParser();
@@ -444,11 +465,12 @@ public class AutoTesting {
 
 
     @Test
-    public String UIvalidation(int family_income_exclusion, int family_income_contribution, int percent_disc_income_saved, int years_of_saving, int interest_on_savings, int hours_worked, int tuition_adjustment, JavascriptExecutor js, WebDriverWait wait, WebDriver driver) {
+    public String UIvalidation(String year, int family_income_exclusion, int family_income_contribution, int percent_disc_income_saved, int years_of_saving, int interest_on_savings, int hours_worked, int tuition_adjustment, JavascriptExecutor js, WebDriverWait wait, WebDriver driver) {
 
         String toReturn = "";
 
-        String toExecute = "$('#family_income_exclusion_threshold').val('" + family_income_exclusion + "').change();";
+        String toExecute = "$('#calendar_year').val('" + year + "').change();";
+        toExecute += "$('#family_income_exclusion_threshold').val('" + family_income_exclusion + "').change();";
         toExecute += "$('#discretionary_income_contribution').val('" + family_income_contribution + "').change();";
         toExecute += "$('#percent_discretionary_income_saved').val('" + percent_disc_income_saved + "').change();";
         toExecute += "$('#years_of_savings').val('" + years_of_saving + "').change();";

@@ -2,6 +2,12 @@
  * Created by norelltagle on 5/17/16.
  */
 
+/**
+ * UITestCaseDetails
+ * This class validates that the values are actually correct
+ * Uses JUnit
+ */
+
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.*;
@@ -59,10 +65,10 @@ public class UITestCaseDetails {
         WebDriverWait wait = new WebDriverWait(driver, 60);
 
         driver.manage().window().maximize();
-        //autotest.loadGooglePage(js, driver);
+        autotest.loadGooglePage(js, driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("weblogin_netid")));
-       // autotest.loadUWPage(js, driver, wait);
-       // autotest.validateOffline(driver, wait);
+        autotest.loadUWPage(js, driver, wait);
+        autotest.validateOffline(driver, wait);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
         ExpectedCondition<Boolean> expectation = new
                 ExpectedCondition<Boolean>() {
@@ -72,7 +78,8 @@ public class UITestCaseDetails {
                 };
 
 
-        String totalCost = autotest.UIvalidation(0, 0, 0, 0, 0, 0, -50, js, wait, driver);
+        //example nominal test set
+        String totalCost = autotest.UIvalidation("2013", 0, 0, 0, 0, 0, 0, -50, js, wait, driver);
         wait.until(expectation);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
         wait.until(ExpectedConditions.refreshed(expectation));
@@ -85,6 +92,7 @@ public class UITestCaseDetails {
         }
 
         assertEquals("$68,572", totalCost);
+
 
 
     }
