@@ -1,0 +1,4 @@
+-r requirements.txt
+yet-another-django-profiler==1.0.2
+sphinx
+sphinx-autobuild

@@ -1,0 +1,128 @@
+<div class="grid-stack-item "
+     data-gs-x="2"
+     data-gs-y="7"
+     data-gs-width="3"
+     data-gs-height="8">
+    <table class="table grid-stack-item-content table-condensed table-bordered">
+        <tbody>
+        <tr class="active">
+            <th>Inputs:</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Median family income</td>
+            <td><input class="unbordered right-justified" id="ui_mfi" disabled/></td>
+            <td>$/yr</td>
+        </tr>
+        <tr>
+            <td>Annual tuition and fees</td>
+            <td><input class="ui_tuition unbordered currency-format right-justified scenario_val"
+                       data-scenario="tuition" disabled/></td>
+            <td>$/yr</td>
+        </tr>
+        <tr>
+            <td>Annual cost of attendance</td>
+            <td><input id="ui_coa"
+                       class="unbordered right-justified currency-format scenario_val"
+                       data-scenario="cost_of_attendance" disabled/>
+            </td>
+            <td>$/yr</td>
+        </tr>
+        <tr>
+            <td>Years in college</td>
+            <td><input id="ui_time_to_graduate" type="number" min="0.1" step="0.5" max="6"
+                       value="0"
+                       data-scenario="time_to_graduate"
+                       class="unbordered right-justified bound scenario_val"/></td>
+            <td>yrs</td>
+            <input type="hidden" class="scenario_val bound" data-scenario="nominal_time_to_graduate" value="0">
+        </tr>
+        <tr>
+            <td>State appropriation</td>
+            <td><input id="ui_state_appropriation" class="unbordered right-justified currency-format scenario_val"
+                       data-scenario="state_appropriation" disabled/></td>
+            <td>$/student/year</td>
+        </tr>
+        <tr class="active">
+            <th>Model variables:</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Percent of current income contributed</td>
+            <td><input id="ui_discretionary_income_contribution" class="unbordered right-justified  scenario_val"
+                       data-scenario="discretionary_income_contribution" disabled/></td>
+            <td>%</td>
+        </tr>
+        <tr>
+            <td>Years spent saving</td>
+            <td><input id="ui_years_of_savings" class="unbordered right-justified scenario_val"
+                       data-scenario="years_of_savings"
+                       disabled/></td>
+            <td>yrs</td>
+        </tr>
+        <tr>
+            <td>Percent of annual income saved</td>
+            <td><input id="ui_percent_discretionary_income_saved" class="unbordered right-justified scenario_val"
+                       data-scenario="percent_discretionary_income_saved" disabled/></td>
+            <td>%</td>
+        </tr>
+        <tr>
+            <td>Interest on savings</td>
+            <td><input id="ui_interest_earned" class="unbordered right-justified scenario_val"
+                       data-scenario="interest_earned"
+                       disabled/></td>
+            <td>%</td>
+        </tr>
+        <tr>
+            <td>Loan repayment ratio</td>
+            <td><input type="number" class="unbordered right-justified bound" min="0" max="50"
+                       data-scenario="loan_repayment_ratio"
+                       value="{{ config.DEFAULT_REPAYMENT_TO_INCOME_RATIO }}"
+                       step="5"></td>
+            <td>%</td>
+        </tr>
+        <tr>
+            <td>Percentile of earner</td>
+            <td><input class="unbordered right-justified bound scenario_val"
+                       value="{{ config.DEFAULT_ANNUAL_EARNING_LEVEL_FOR_ANALYSIS }}"
+                       type="number" min="1" max="100" data-scenario="earnings_percentile"/></td>
+            <td>% ~ $<input type="text" style="display: inline" class="unbordered currency-format scenario_val"
+                            data-scenario="earnings_annual" disabled>
+            </td>
+        </tr>
+        {% if config.SHOW_PERCENTILE_OF_EXCLUDED_EARNER %}
+            <tr>
+                <td>Percentile of excluded earner</td>
+                <td><input type="text" class="unbordered right-justified scenario_val" disabled
+                           data-scenario="percentile_of_excluded_earner"></td>
+                <td></td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>Interest on debt</td>
+            <td><input class="unbordered right-justified bound" type="number" min="0" step="1" max="20"
+                       data-scenario="interest_on_debt"
+                       value="{{ config.DEFAULT_REPAYMENT_INTEREST }}"/></td>
+            <td>% APR</td>
+        </tr>
+        <tr>
+            <td>Loan duration</td>
+            <td><input class="unbordered right-justified bound" type="number" min="1" step="1" max="30"
+                       data-scenario="loan_duration" value="{{ config.DEFAULT_REPAYMENT_YEARS }}"/></td>
+            <td>yrs</td>
+        </tr>
+
+        {% if config.ENABLE_PLOT_SMOOTH_SWITCH %}
+            <tr>
+                <td>Smoothing</td>
+                <td><input type="checkbox" class="bound" data-scenario="plot_smoothing"></td>
+                <td></td>
+            </tr>
+        {% endif %}
+        <input type="hidden" id="state_need_grant_shown" class="bound" data-type="boolean"
+               data-scenario="state_need_grant_shown" value="true">
+        </tbody>
+    </table>
+</div>

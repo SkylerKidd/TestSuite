@@ -1,0 +1,27 @@
+
+<h1>Scenario</h1>
+<table class="table">
+    {% for key,val in scenario.iteritems %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ val }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<h1>Data</h1>
+<table class="table table-hover">
+    <tr>
+        <th>mfi ( %mfi )</th>
+        {% for i in x_values %}
+            <td>{{ i }}</td>
+        {% endfor %}
+    </tr>
+    {% for plot_name, values in plots.iteritems %}
+        <tr>
+            <th>{{ plot_name }}</th>
+            {% for val in values %}
+                <td>{{ val }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>

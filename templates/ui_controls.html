@@ -1,0 +1,134 @@
+<div class="grid-stack-item "
+     data-gs-x="5"
+     data-gs-y="7"
+     data-gs-width="5"
+     data-gs-height="7">
+    <div class="grid-stack-item-content">
+        <div class="row">
+            <div class="col-xs-3 ">
+                <h4>General information</h4>
+            </div>
+            <div class="col-xs-3 ">
+                <h4>Family's share</h4>
+            </div>
+
+            <div class="col-xs-3">
+                <h4>Student's share</h4>
+            </div>
+            <div class="col-xs-3">
+                <h4>Policy change</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3 ">
+                <label for="">Academic year</label>
+                <select name="year" id="calendar_year" class="form-control">
+                    {% for year in ALLOWED_YEARS %}
+                        <option value="{{ year.year }}" {% if year.year == 2013 %} selected {% endif %} >{{ year.label }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div class="form-group col-xs-3 ">
+                <label for="">Family income exclusion</label>
+
+                <div class="input-group">
+                    <div class="slider" data-for="family_income_exclusion_threshold"></div>
+                    <input class="form-control validate" min="0" max="400" type="number" value="200"
+                           id="family_income_exclusion_threshold">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="">Hours worked ~ $<span class="scenario_val currency-format"
+                                                    data-scenario="annual_take_home_pay"></span>/yr</label>
+
+                <div class="input-group">
+                    <div class="slider" data-for="hours_worked"></div>
+                    <input class="form-control validate" type="number" min="0" max="1000" value="500" id="hours_worked">
+                    <span class="input-group-addon">hrs / yr</span>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="">Tuition adjustment</label>
+                <div class="input-group">
+                    <div class="slider" data-for="policy_change_tuition_adjustment"></div>
+                    <input type="number" class="form-control validate" value="0" min="-50" max="50" step="1"
+                           id="policy_change_tuition_adjustment">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3 ">
+                <label for="">State</label>
+                <select name="state" id="state" class="form-control">
+                    <option value="Washington">Washington</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-3 ">
+                <label for="">Family income contribution</label>
+
+                <div class="input-group">
+                    <div class="slider" data-for="discretionary_income_contribution"></div>
+                    <input class="form-control validate" type="number" value="10" min="0" max="40"
+                           id="discretionary_income_contribution">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3 ">
+                <label for="">Attending</label>
+                <select name="institution_type" id="institution_type" class="form-control">
+                    <option value="Public Research">Public research university</option>
+                    <option selected value="Public Regional">Public regional university</option>
+                    <option value="CTCS">Community or technical college</option>
+                    <option value="Private Nonprofit">Private nonprofit university</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-3 ">
+                <label for="">Percent disc income saved</label>
+                <div class="input-group">
+                    <div class="slider" data-for="percent_discretionary_income_saved"></div>
+                    <input type="number" min="0" max="40" class="validate form-control"
+                           id="percent_discretionary_income_saved"
+                           value="5">
+                    <span class="input-group-addon" id="basic-addon2">%</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3 ">
+                <label for="">Living status</label>
+                <select name="living_status" id="living_status" class="form-control">
+                    <option selected value="live_away">Dependent live away</option>
+                    <option value="Dep_live_w_parent">Dependent live with parents</option>
+                    <option value="Indep_live_w_parent">Independent</option>
+                </select>
+
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="">Years of saving</label>
+                <div class="input-group">
+                    <div class="slider" data-for="years_of_savings"></div>
+                    <input type="number" min="0" max="20" value="10" id="years_of_savings"
+                           class="validate form-control">
+                    <span class="input-group-addon">yrs</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3 col-xs-offset-3 ">
+                <label for="">Interest on savings</label>
+                <div class="input-group">
+                    <div class="slider" data-for="interest_earned"></div>
+                    <input type="number" step="0.5" min="0" max="10" value="1" id="interest_earned"
+                           class="form-control">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

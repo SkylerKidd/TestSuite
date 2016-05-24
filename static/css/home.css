@@ -1,0 +1,64 @@
+body {
+    min-width: 1550px;
+    overflow: scroll;
+}
+
+.tuition-line > line {
+    stroke: black;
+    stroke-dasharray: '5, 5';
+}
+
+.tuition-line > text {
+    fill: black;
+}
+
+input.unbordered {
+    background: transparent;
+    display: block;
+    width: 65px;
+    min-width: 65px;
+    border: solid;
+    border-color: darkgrey;
+    border-width: 0.5px;
+}
+
+input.unbordered:disabled {
+    border: none;
+}
+
+.c3-area {
+    opacity: 1;
+}
+
+.tuition-line > text {
+
+    font-size: 15px;
+}
+
+.center-text {
+    text-align: center;
+}
+
+div.row {
+    margin-top: 2px;
+}
+
+footer p {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+div.form-group > label {
+    font-size: 13px;
+}
+
+table.table td {
+    font-size: 13px;
+}
+
+.right-justified {
+    text-align: right;
+}

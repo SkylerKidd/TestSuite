@@ -1,0 +1,109 @@
+RESPONSE
+response:
+500
+status: INTERNAL SERVER ERROR
+
+REQUEST
+  "params": [{ "name": "csrfmiddlewaretoken"
+ "value": "CvahAdI0tVPMI2hpnsv9YwmEEgPTGIcj"
+ "fileName": "null"
+ "contentType": "null"
+ "comment": "null"
+  }
+ { "name": "plots"
+ "value": "["state_appropriation"
+"college_savings"
+"family_income"
+"pell_grant"
+"state_need_grant"
+"institutional_aid"
+"student_work"
+"affordable_debt"
+"additional_debt"
+"cost_of_attendance"]"
+ "fileName": "null"
+ "contentType": "null"
+ "comment": "null"
+  }
+ { "name": "scenario"
+ "value": "{"calendar_year":null
+"state":"Washington"
+"years_of_savings":10
+"percent_discretionary_income_saved":"5"
+"discretionary_income_contribution":"10"
+"institution_type":"Public Regional"
+"hours_worked":"500"
+"interest_earned":1
+"living_status":"live_away"
+"institution":"UW"
+"family_size":4
+"family_income_exclusion_threshold":"200"
+"policy_change_tuition_adjustment":"0"
+"time_to_graduate":"4"
+"nominal_time_to_graduate":"4"
+"loan_repayment_ratio":"10"
+"earnings_percentile":"30"
+"interest_on_debt":"5"
+"loan_duration":"10"
+"plot_smoothing":false
+"state_need_grant_shown":true}"
+ "fileName": "null"
+ "contentType": "null"
+ "comment": "null"
+  }]
+
+RESPONSE
+response:
+500
+status: INTERNAL SERVER ERROR
+
+REQUEST
+  "params": [{ "name": "csrfmiddlewaretoken"
+ "value": "CvahAdI0tVPMI2hpnsv9YwmEEgPTGIcj"
+ "fileName": "null"
+ "contentType": "null"
+ "comment": "null"
+  }
+ { "name": "plots"
+ "value": "["state_appropriation"
+"college_savings"
+"family_income"
+"pell_grant"
+"state_need_grant"
+"institutional_aid"
+"student_work"
+"affordable_debt"
+"additional_debt"
+"cost_of_attendance"]"
+ "fileName": "null"
+ "contentType": "null"
+ "comment": "null"
+  }
+ { "name": "scenario"
+ "value": "{"calendar_year":null
+"state":"Washington"
+"years_of_savings":10
+"percent_discretionary_income_saved":"5"
+"discretionary_income_contribution":"10"
+"institution_type":"Public Regional"
+"hours_worked":"500"
+"interest_earned":1
+"living_status":"live_away"
+"institution":"UW"
+"family_size":4
+"family_income_exclusion_threshold":"200"
+"policy_change_tuition_adjustment":"0"
+"time_to_graduate":"4"
+"nominal_time_to_graduate":"4"
+"loan_repayment_ratio":"10"
+"earnings_percentile":"30"
+"interest_on_debt":"5"
+"loan_duration":"10"
+"plot_smoothing":false
+"state_need_grant_shown":true}"
+ "fileName": "null"
+ "contentType": "null"
+ "comment": "null"
+  }]
+
+
