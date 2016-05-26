@@ -61,15 +61,20 @@ public class AutoTesting {
     public static final String desktop = System.getProperty("user.home") + "/Desktop/"; //path for the desktop
     public static final String siteURL = "http://localhost:8000/proto1/#"; //website URL
     public static final String logFilePrefix = "localhost-8000"; //prefix for file name
-    public static final String netExportPath = new File ("").getAbsolutePath() + "/netExport-0.8.xpi";
-    public static final String fireBugPath =  new File ("").getAbsolutePath() + "/firebug-2.0.16.xpi";
+    public static String netExportPath = "";
+    public static String fireBugPath =  "";
 
     public static final int WAIT_TIME = 60; //wait time for WebDriver
     public String requestLogs = ""; //String where HAR file will be stored
 
     public static void main(String[] args) throws IOException, Exception {
-        System.out.println("NETEXPORT PATH " + netExportPath);
-        System.out.println("FIREBUG PATH " + fireBugPath);
+
+        netExportPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//", "/") + "netExport-0.8.xpi";
+        fireBugPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//" , "/") + "firebug-2.0.16.xpi";
+
+        System.out.println("NETEXPORT: " + netExportPath);
+        System.out.println("FIREBUG: " + fireBugPath);
+
         AutoTesting test = new AutoTesting();
 
         /*
@@ -175,7 +180,9 @@ public class AutoTesting {
         js.executeScript(toExecute);
 
         System.out.println("Done!");
-        // test.testallTables(wait, driver, js);
+        //test.testallTables(wait, driver, js);
+        //test.testAllDropDowns(wait, driver, js);
+        //test.testAllSliders(wait,driver,js);
         Thread.sleep(5000);
         test.scanAndSendHAR(driver);
         //test.takeScreenshot2(driver);
@@ -299,7 +306,8 @@ public class AutoTesting {
 
     }
 
-
+    //scanAndSendHar
+    //Records all the requests and responses throughu
     public void scanAndSendHAR(WebDriver driver) throws IOException, AWTException {
 
         File dir = new File(desktop);
@@ -370,6 +378,8 @@ public class AutoTesting {
         }
     }
 
+    //takeScreenshot
+    //Takes screenshot of window of driver 
     public void takeScreenshot2(WebDriver driver, String filePath) {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
@@ -465,6 +475,7 @@ public class AutoTesting {
 
 
     @Test
+    //Use nominal sets as arguments
     public String UIvalidation(String year, int family_income_exclusion, int family_income_contribution, int percent_disc_income_saved, int years_of_saving, int interest_on_savings, int hours_worked, int tuition_adjustment, JavascriptExecutor js, WebDriverWait wait, WebDriver driver) {
 
         String toReturn = "";
