@@ -65,10 +65,7 @@ public class UITestCaseDetails {
         WebDriverWait wait = new WebDriverWait(driver, 60);
 
         driver.manage().window().maximize();
-        autotest.loadGooglePage(js, driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("weblogin_netid")));
-        autotest.loadUWPage(js, driver, wait);
-        autotest.validateOffline(driver, wait);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
         ExpectedCondition<Boolean> expectation = new
                 ExpectedCondition<Boolean>() {
@@ -79,6 +76,8 @@ public class UITestCaseDetails {
 
 
         //example nominal test set
+        //Look at UIvalidation() in Autotesting.java to see what the arguments should be
+        //Input the nominal sets as the arguments
         String totalCost = autotest.UIvalidation("2013", 0, 0, 0, 0, 0, 0, -50, js, wait, driver);
         wait.until(expectation);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
@@ -91,6 +90,8 @@ public class UITestCaseDetails {
 
         }
 
+        //First argument should be what the correct value is
+        //Second argument is what is actually calculated/displayed on the web page
         assertEquals("$68,572", totalCost);
 
 

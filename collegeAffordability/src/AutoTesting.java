@@ -59,7 +59,7 @@ public class AutoTesting {
 
     //Paths that would need to be changed eventually
     public static final String desktop = System.getProperty("user.home") + "/Desktop/"; //path for the desktop
-    public static final String siteURL = "http://localhost:8000/proto1/#"; //website URL
+    public static final String siteURL = "https://affordability-model.css.uwb.edu/proto1/"; //website URL
     public static final String logFilePrefix = "localhost-8000"; //prefix for file name
     public static String netExportPath = "";
     public static String fireBugPath =  "";
@@ -69,51 +69,11 @@ public class AutoTesting {
 
     public static void main(String[] args) throws IOException, Exception {
 
+        //Save these in the
         netExportPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//", "/") + "netExport-0.8.xpi";
         fireBugPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//" , "/") + "firebug-2.0.16.xpi";
-        
 
         AutoTesting test = new AutoTesting();
-
-        /*
-        /Users/norelltagle/.m2/repository/org/browsermob/browsermob-proxy/2.0-beta-2/browsermob-proxy-2.0-beta-2.jar!/org/browsermob/proxy/ProxyServer.class
-        ProxyServer server = new ProxyServer(4444);
-
-
-        server.start();
-        server.setCaptureHeaders(true);
-        server.setCaptureContent(true);
-        Proxy proxy = server.seleniumProxy();
-        proxy.setNoProxy(".google.com, .washington.edu, .googleapis.com, gstatic.com");
-
-        server.addRequestInterceptor(new HttpRequestInterceptor() {
-            @Override
-                public void process(HttpRequest httpRequest, HttpContext httpContext) throws HttpException, IOException {
-                    //httpContext.
-                // System.out.println(httpRequest.);
-            }
-        });
-        server.addResponseInterceptor(new HttpResponseInterceptor() {
-            @Override
-            public void process(HttpResponse httpResponse, HttpContext httpContext) throws HttpException, IOException {
-                System.out.println(httpResponse.getStatusLine().getStatusCode());
-                if (httpResponse.getStatusLine().getStatusCode() == 500) {
-                    //log the error and send the email
-                    System.out.println("BAD");
-                }
-                if (httpResponse.getStatusLine().getStatusCode() == 200) {
-                    System.out.println("Good");
-                }
-                if (httpResponse.getStatusLine().getStatusCode() == 302) {
-                    System.out.println("Redirecting");
-                }
-            }
-        });
-
-        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-
-        capabilities.setCapability(CapabilityType.PROXY, proxy);
-*/
 
         FirefoxProfile profile = new FirefoxProfile();
         File netExport = new File(netExportPath);
@@ -139,48 +99,24 @@ public class AutoTesting {
         WebDriver driver = new FirefoxDriver(profile);
 
         driver.get(siteURL);
-/*
-
-        try {
-            // Wait till Firebug is loaded
-            Thread.sleep(5000);
-
-            // Load test page
-            driver.get(siteURL);
-
-            // Wait till HAR is exported
-            // Thread.sleep(10000);
-        } catch (InterruptedException err) {
-            System.out.println(err);
-        }
-
-*/
-
 
         driver.manage().window().maximize();
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, WAIT_TIME); //Have a maximum wait of 60 seconds
 
-        test.loadGooglePage(js, driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("weblogin_netid")));
-        //test.wait(800);
-        test.loadUWPage(js, driver, wait);
-        //test.wait(3000);
-        test.validateOffline(driver, wait);
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
 
-        //    test.testAllDropDowns(wait, driver, js);
-        // test.testAllSliders(wait, driver, js);
 
-        String toExecute = "$('#calendar_year').val('2017').change();";
-        js.executeScript(toExecute);
+       // String toExecute = "$('#calendar_year').val('2017').change();";
+       // js.executeScript(toExecute);
 
         System.out.println("Done!");
-        //test.testallTables(wait, driver, js);
-        //test.testAllDropDowns(wait, driver, js);
-        //test.testAllSliders(wait,driver,js);
+        test.testallTables(wait, driver, js);
+        test.testAllDropDowns(wait, driver, js);
+        test.testAllSliders(wait,driver,js);
         Thread.sleep(5000);
         test.scanAndSendHAR(driver);
         //test.takeScreenshot2(driver);
@@ -189,25 +125,6 @@ public class AutoTesting {
 
     }
 
-
-    public void loadGooglePage(JavascriptExecutor js, WebDriver driver) {
-        js.executeScript("document.getElementById('Email').value = 'ntagle@uw.edu'");
-        driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div[1]/form/div[1]/div/input")).click();
-    }
-
-    public void loadUWPage(JavascriptExecutor js, WebDriver driver, WebDriverWait wait) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("weblogin_netid")));
-        js.executeScript("document.getElementById('weblogin_netid').value = 'ntagle'");
-        js.executeScript("document.getElementById('weblogin_password').value = 'Nmot1994'");
-        driver.findElement(By.xpath("/html/body/div/div/div[1]/form/ul[2]/li/input")).click();
-    }
-
-    //Automatically approves access to the website
-    public void validateOffline(WebDriver driver, WebDriverWait wait) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_approve_access")));
-        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div/form/button[1]")).click();
-
-    }
 
 
     //testAllTables
@@ -238,14 +155,12 @@ public class AutoTesting {
                             if (step == null || step.isEmpty()) {
                                 interval = 10;
                             } else {
-                                System.out.println("STEP: " + step);
                                 interval = Double.parseDouble(step);
                             }
 
                             for (double i = min; i <= max; i += interval) {
                                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
                                 String toExecute = "$('[data-scenario=\"" + dataScenario + "\"]').val('" + i + "').change();";
-                                System.out.println(toExecute);
                                 js.executeScript(toExecute);
                             }
                         }
@@ -341,17 +256,7 @@ public class AutoTesting {
 
                         requestLogs += allParams + "\n\n";
 
-                        /*
-
-                        String[] separateParams = allParams.split(",");
-                        for (int i = 0; i < separateParams.length; i++) {
-                            requestLogs += separateParams[i] + "\n";
-                        }
-                        */
-
-                        //System.out.println("PARAMS:" + params);
-                        //requestLogs += "RESPONSE\n" + entry.getResponse().toString() + "\n\n REQUEST\n" + entry.getRequest().toString() + "\n\n\n\n";
-                        System.out.println("writing to log");
+                       System.out.println("writing to log");
                     }
                 }
                 file.delete();
@@ -377,7 +282,7 @@ public class AutoTesting {
     }
 
     //takeScreenshot
-    //Takes screenshot of window of driver 
+    //Takes screenshot of window of driver
     public void takeScreenshot2(WebDriver driver, String filePath) {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
