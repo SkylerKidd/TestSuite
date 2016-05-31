@@ -71,9 +71,7 @@ public class AutoTesting {
 
         netExportPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//", "/") + "netExport-0.8.xpi";
         fireBugPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//" , "/") + "firebug-2.0.16.xpi";
-
-        System.out.println("NETEXPORT: " + netExportPath);
-        System.out.println("FIREBUG: " + fireBugPath);
+        
 
         AutoTesting test = new AutoTesting();
 
