@@ -62,15 +62,15 @@ public class AutoTesting {
     public static final String siteURL = "https://affordability-model.css.uwb.edu/proto1/"; //website URL
     public static final String logFilePrefix = "affordability-model.css.uwb.edu"; //prefix for file name
     public static String netExportPath = "";
-    public static String fireBugPath =  "";
+    public static String fireBugPath = "";
 
     public static final int WAIT_TIME = 60; //wait time for WebDriver
     public String requestLogs = ""; //String where HAR file will be stored
 
     public static void main(String[] args) throws IOException, Exception {
         //Save these in the
-        netExportPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//", "/") + "netExport-0.8.xpi";
-        fireBugPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//" , "/") + "firebug-2.0.16.xpi";
+        netExportPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar", "").replaceAll("//", "/") + "netExport-0.8.xpi";
+        fireBugPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar", "").replaceAll("//", "/") + "firebug-2.0.16.xpi";
 
         AutoTesting test = new AutoTesting();
 
@@ -109,13 +109,13 @@ public class AutoTesting {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
 
 
-       String toExecute = "$('#calendar_year').val('2017').change();";
-        js.executeScript(toExecute);
+        // String toExecute = "$('#calendar_year').val('2017').change();";
+        //  js.executeScript(toExecute);
 
         System.out.println("Done!");
-      //  test.testallTables(wait, driver, js);
-     //   test.testAllDropDowns(wait, driver, js);
-      //  test.testAllSliders(wait,driver,js);
+        test.testallTables(wait, driver, js);
+        test.testAllDropDowns(wait, driver, js);
+        test.testAllSliders(wait, driver, js);
         Thread.sleep(5000);
         test.scanAndSendHAR(driver);
         //test.takeScreenshot2(driver);
@@ -123,7 +123,6 @@ public class AutoTesting {
         System.out.println("Done for real!");
 
     }
-
 
 
     //testAllTables
@@ -243,6 +242,7 @@ public class AutoTesting {
 
                         String allParams = "{" + entry.getRequest().getPostData().getParams().toString() + "}";
 
+
                         //Fix the string because the library doesn't actually format it into proper JSON
                         allParams = allParams.replaceAll(",  }", "}").replaceAll("\"\\[", "[").replaceAll("\\]\"", "]").replaceAll("\"\\{", "{").replaceAll("}\"", "}").replaceAll(":null", ":\"null\"");
 
@@ -253,9 +253,10 @@ public class AutoTesting {
                         JsonElement el = parser.parse(allParams);
                         allParams = gson.toJson(el); // done
 
+
                         requestLogs += allParams + "\n\n";
 
-                       System.out.println("writing to log");
+                        System.out.println("writing to log");
                     }
                 }
                 file.delete();
