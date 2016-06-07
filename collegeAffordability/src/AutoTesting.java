@@ -60,7 +60,7 @@ public class AutoTesting {
     //Paths that would need to be changed eventually
     public static final String desktop = System.getProperty("user.home") + "/Desktop/"; //path for the desktop
     public static final String siteURL = "https://affordability-model.css.uwb.edu/proto1/"; //website URL
-    public static final String logFilePrefix = "localhost-8000"; //prefix for file name
+    public static final String logFilePrefix = "affordability-model.css.uwb.edu"; //prefix for file name
     public static String netExportPath = "";
     public static String fireBugPath =  "";
 
@@ -68,7 +68,6 @@ public class AutoTesting {
     public String requestLogs = ""; //String where HAR file will be stored
 
     public static void main(String[] args) throws IOException, Exception {
-
         //Save these in the
         netExportPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//", "/") + "netExport-0.8.xpi";
         fireBugPath = AutoTesting.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().replaceAll("collegeAffordability.jar","").replaceAll("//" , "/") + "firebug-2.0.16.xpi";
@@ -110,13 +109,13 @@ public class AutoTesting {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
 
 
-       // String toExecute = "$('#calendar_year').val('2017').change();";
-       // js.executeScript(toExecute);
+       String toExecute = "$('#calendar_year').val('2017').change();";
+        js.executeScript(toExecute);
 
         System.out.println("Done!");
-        test.testallTables(wait, driver, js);
-        test.testAllDropDowns(wait, driver, js);
-        test.testAllSliders(wait,driver,js);
+      //  test.testallTables(wait, driver, js);
+     //   test.testAllDropDowns(wait, driver, js);
+      //  test.testAllSliders(wait,driver,js);
         Thread.sleep(5000);
         test.scanAndSendHAR(driver);
         //test.takeScreenshot2(driver);
@@ -245,7 +244,7 @@ public class AutoTesting {
                         String allParams = "{" + entry.getRequest().getPostData().getParams().toString() + "}";
 
                         //Fix the string because the library doesn't actually format it into proper JSON
-                        allParams = allParams.replaceAll(",  }", "}").replaceAll("\"\\[", "[").replaceAll("\\]\"", "]").replaceAll("\"\\{", "{").replaceAll("}\"", "}");
+                        allParams = allParams.replaceAll(",  }", "}").replaceAll("\"\\[", "[").replaceAll("\\]\"", "]").replaceAll("\"\\{", "{").replaceAll("}\"", "}").replaceAll(":null", ":\"null\"");
 
                         //Format the file into proper JSON
                         JsonParser parser = new JsonParser();
@@ -403,7 +402,6 @@ public class AutoTesting {
                         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
                     }
                 };
-
 
         wait.until(expectation);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui_total_coa")));
