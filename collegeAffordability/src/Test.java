@@ -13,8 +13,7 @@ public class Test {
 
         JsonParser parser = new JsonParser();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        String json = "\"{\"a\":1,\"b\":2,\"c\":{\"d\":1,\"e\":[1,2]}}\"";
+        String json = "{\"a\":1,\"b\":2,\"c\":{\"d\":1,\"e\":[1,2]}}";
 
         JsonElement el = parser.parse(json);
 
